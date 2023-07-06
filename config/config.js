@@ -1,4 +1,4 @@
 export default{
     'COMPANY': 'EatJa',
-    'SERVER_PORT': 30000
+    'SERVER_PORT': 80
 }

@@ -74,4 +74,5 @@ INSERT INTO eatja.userRelation(followerId,followeeId) VALUES
 
 INSERT INTO eatja.review(userId, imgUrl, locationUrl, tag, description) VALUES
 ("rmsdnjs518","https://pcmap.place.naver.com/restaurant/33068253/home?bookmarkId=551864873&from=map&fromPanelNum=1&ts=1688952209918#", "https://naver.me/5tj4jtol", 1, "여기 닭도리탕 마늘맛 좔좔" ),
-("rootPark", "https://pcmap.place.naver.com/restaurant/793407871/home?bookmarkId=843473909&from=map&fromPanelNum=1&ts=1688952294901#", "https://naver.me/IMQppLwu", 1, "맛있긴 한디 공기밥 2천원 실화?");
+("rootPark", "https://pcmap.place.naver.com/restaurant/793407871/home?bookmarkId=843473909&from=map&fromPanelNum=1&ts=1688952294901#", "https://naver.me/IMQppLwu", 1, "맛있긴 한디 공기밥 2천원 실화?"),
+("rmsdnjs518", "https://pcmap.place.naver.com/restaurant/20601121/home?bookmarkId=655360159&from=map&fromPanelNum=1&ts=1688957113485#", "https://naver.me/xTeSlxcE", 1, "맛있는 동치미맛 막국수");

@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { consoleBar, timeLog } from './lib/common.js';
 import config from './config/config.js';
-import { ping } from './controller/system.js'
+import { ping } from './controller/system.js';
 
 const serverPort = config.SERVER_PORT;
 const app = express();

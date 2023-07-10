@@ -76,7 +76,7 @@ const postMyReview = async (req, res) => {
 // 리뷰 삭제
 
 const deleteMyReview = async (req, res) => {
-    const query ='DELETE FROM review WHERE reviewId = ?';
+    const query = 'DELETE FROM review WHERE reviewId = ?';
     const reviewId = req.query.reviewId;
 
     const results = {};

@@ -10,7 +10,7 @@ import config from './config/config.js';
 import { ping } from './controller/system.js';
 import { getFolloweeInfo, getFollowerInfo, getMyPage } from './controller/userInfo.js';
 import { deleteMyReview, getMyReview, getReviewInfo, getTagReview, postMyReview } from './controller/reviewInfo.js';
-import { follow } from './controller/following.js';
+import { follow, unFollow } from './controller/following.js';
 
 const serverPort = config.SERVER_PORT;
 const app = express();
@@ -31,6 +31,7 @@ router.route('/tag-review').get(getTagReview);
 router.route('/follower-info').get(getFollowerInfo);
 router.route('/followee-info').get(getFolloweeInfo);
 router.route('/follow').post(follow);
+router.route('/follow').delete(unFollow);
 
 
 // -------------------- server start --------------------

@@ -23,14 +23,14 @@ const getMyPage = async (req, res) => {
         } catch (err) {
             results.result = false;
             results.error.push('Query Error');
-        } 
+        }
     } catch (err) {
         results.result = false;
-        results.error.push('DB Error');   
+        results.error.push('DB Error');
     }
     res.send(results);
     consoleBar();
-    timeLog('GET my-page called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
+    timeLog('GET my-page called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
 };
 
 
@@ -50,20 +50,20 @@ const getFollowerInfo = async (req, res) => {
         const connection = await pool.getConnection(async conn => conn);
         try {
             const [rows, fields] = await connection.query(query, userId);
-            for(let i = 0; i <rows.length; i++){
+            for (let i = 0; i < rows.length; i++) {
                 results.followers.push(rows[i]);
             }
         } catch (err) {
             results.result = false;
             results.error.push('Query Error');
-        } 
+        }
     } catch (err) {
         results.result = false;
-        results.error.push('DB Error');   
+        results.error.push('DB Error');
     }
     res.send(results);
     consoleBar();
-    timeLog('GET follower-info called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
+    timeLog('GET follower-info called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
 };
 
 // ---------- [get]followee-info -----------
@@ -82,20 +82,20 @@ const getFolloweeInfo = async (req, res) => {
         const connection = await pool.getConnection(async conn => conn);
         try {
             const [rows, fields] = await connection.query(query, userId);
-            for(let i = 0; i <rows.length; i++){
+            for (let i = 0; i < rows.length; i++) {
                 results.followers.push(rows[i]);
             }
         } catch (err) {
             results.result = false;
             results.error.push('Query Error');
-        } 
+        }
     } catch (err) {
         results.result = false;
-        results.error.push('DB Error');   
+        results.error.push('DB Error');
     }
     res.send(results);
     consoleBar();
-    timeLog('GET followee-info called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
+    timeLog('GET followee-info called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
 };
 
 
@@ -105,7 +105,7 @@ const getFolloweeInfo = async (req, res) => {
 const postFollow = async (results, followerId, followeeId) => {
     const query = 'INSERT INTO userRelation(followerId, followeeId) VALUES (?,?);';
 
-    const queryData = [followerId,followeeId];
+    const queryData = [followerId, followeeId];
 
     results.result = true;
     results.error = [];
@@ -117,10 +117,10 @@ const postFollow = async (results, followerId, followeeId) => {
         } catch (err) {
             results.result = false;
             results.error.push('Query Error [postFollow]');
-        } 
+        }
     } catch (err) {
         results.result = false;
-        results.error.push('DB Error [postFollow]');   
+        results.error.push('DB Error [postFollow]');
     }
 };
 
@@ -165,5 +165,73 @@ const appendFollower = async (results, followeeId) => {
     }
 };
 
+// ---------- [delete]follow -----------
+// unfollow 동작
+const deleteFollow = async (results, followerId, followeeId) => {
+    const query = 'DELETE FROM userRelation WHERE followerId = ? AND followeeId = ?;';
 
-export { getMyPage, getFollowerInfo, getFolloweeInfo, postFollow, appendFollowee, appendFollower };
+    const queryData = [followerId, followeeId];
+
+    results.result = true;
+    results.error = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, queryData);
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error [postFollow]');
+        }
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error [postFollow]');
+    }
+};
+
+// ---------- [delete]follow -----------
+// unfollow 동작시 follower 감소
+
+const reduceFollowee = async (results, followerId) => {
+    const query = 'UPDATE user set followeeCount = followeeCount - 1 WHERE userId = ?;';
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, followerId);
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error [appendFollowee]');
+        }
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error [appendFollowee]');
+    }
+
+};
+
+// ---------- [delete]follow -----------
+// unfollow 동작시 followee 감소
+
+const reduceFollower = async (results, followeeId) => {
+    const query = 'UPDATE user set followerCount = followerCount - 1 WHERE userId = ?;';
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, followeeId);
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error [appendFollower');
+        }
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error [appendFollower]');
+    }
+};
+
+export {
+    getMyPage, getFollowerInfo, getFolloweeInfo,
+    postFollow, appendFollowee, appendFollower,
+    deleteFollow, reduceFollowee, reduceFollower
+};

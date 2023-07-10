@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS eatja.userRelation (
   userRelationId INT NOT NULL AUTO_INCREMENT,
   followerId VARCHAR(30),
   followeeId VARCHAR(30),
-  created NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY(userRelationId)
 );
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS eatja.review (
   locationUrl VARCHAR(200),
   tag TINYINT(1),
   description VARCHAR(200),
-  created NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY(reviewId)
 );
 
@@ -56,13 +56,13 @@ CREATE TABLE IF NOT EXISTS eatja.tag (
 -- --------------------------------
 
 
-INSERT INTO eatja.tag(tagId, tagName)
-VALUES(0, "전체"),
-VALUES(1, "한식"),
-VALUES(2, "양식"),
-VALUES(3, "중식"),
-VALUES(4, "일식"),
-VALUES(5, "카페");
+INSERT INTO eatja.tag(tagId, tagName) VALUES
+(0, "전체"),
+(1, "한식"),
+(2, "양식"),
+(3, "중식"),
+(4, "일식"),
+(5, "카페");
 
 INSERT INTO eatja.user(userId, userName, followerCount, followeeCount, tag1, tag2) VALUES
 ("rmsdnjs518", "깨무렁", 1, 1, 1, 2),

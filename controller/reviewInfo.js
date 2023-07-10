@@ -6,6 +6,7 @@ import { consoleBar, timeLog, resSend } from "../lib/common.js";
 import { pool } from "../lib/connect.js";
 
 // ---------- [get]my-review -----------
+// userId로 리뷰 찾기
 
 const getMyReview = async (req, res) => {
     const query = 'SELECT * FROM review WHERE userId = ?; ';
@@ -37,6 +38,7 @@ const getMyReview = async (req, res) => {
 };
 
 // ---------- [get]tag-review -----------
+// tag로 리뷰 찾기
 
 const getTagReview = async (req, res) => {
     const query = 'SELECT * FROM review WHERE tag = ?; ';

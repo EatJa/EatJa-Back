@@ -8,7 +8,7 @@ import cors from 'cors';
 import { consoleBar, timeLog } from './lib/common.js';
 import config from './config/config.js';
 import { ping } from './controller/system.js';
-import { getMyPage } from './controller/userInfo.js';
+import { getFollowerInfo, getMyPage } from './controller/userInfo.js';
 import { getMyReview, getTagReview } from './controller/reviewInfo.js';
 
 const serverPort = config.SERVER_PORT;
@@ -24,6 +24,7 @@ router.route('/ping').get(ping);
 router.route('/my-page').get(getMyPage);
 router.route('/my-review').get(getMyReview);
 router.route('/tag-review').get(getTagReview);
+router.route('/follower-info').get(getFollowerInfo);
 
 // -------------------- server start --------------------
 

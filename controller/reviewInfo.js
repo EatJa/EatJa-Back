@@ -37,38 +37,6 @@ const getMyReview = async (req, res) => {
     timeLog('GET my-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
 };
 
-// ---------- [get]tag-review -----------
-// tag로 리뷰 찾기
-
-const getTagReview = async (req, res) => {
-    const query = 'SELECT * FROM review WHERE tag = ?; ';
-    const tagId = req.query.tagId;
-    const results = {};
-    results.result = true;
-    results.error = [];
-    results.tagId = tagId;
-    results.reviews = [];
-
-    try {
-        const connection = await pool.getConnection(async conn => conn);
-        try {
-            const [rows, fields] = await connection.query(query, tagId);
-            for (let i = 0; i < rows.length; i++) {
-                results.reviews.push(rows[i]);
-            }
-        } catch (err) {
-            results.result = false;
-            results.error.push('Query Error');
-        }
-    } catch (err) {
-        results.result = false;
-        results.error.push('DB Error');
-    }
-    res.send(results);
-    consoleBar();
-    timeLog('GET tag-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
-};
-
 // ---------- [post]my-review -----------
 // 리뷰 작성
 
@@ -104,6 +72,69 @@ const postMyReview = async (req, res) => {
     timeLog('POST my-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
 };
 
+// ---------- [delete]my-review -----------
+// 리뷰 삭제
+
+const deleteMyReview = async (req, res) => {
+    const query ='DELETE FROM review WHERE reviewId = ?';
+    const reviewId = req.query.reviewId;
+
+    const results = {};
+    results.result = true;
+    results.error = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, reviewId);
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error');
+        }
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error');
+    }
+    res.send(results);
+    consoleBar();
+    timeLog('DELETE my-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
+
+
+};
+
+// ---------- [get]tag-review -----------
+// tag로 리뷰 찾기
+
+const getTagReview = async (req, res) => {
+    const query = 'SELECT * FROM review WHERE tag = ?; ';
+    const tagId = req.query.tagId;
+    const results = {};
+    results.result = true;
+    results.error = [];
+    results.tagId = tagId;
+    results.reviews = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, tagId);
+            for (let i = 0; i < rows.length; i++) {
+                results.reviews.push(rows[i]);
+            }
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error');
+        }
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error');
+    }
+    res.send(results);
+    consoleBar();
+    timeLog('GET tag-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
+};
+
+
 // ---------- [get]review-info -----------
 // reviewId로 리뷰 찾기
 
@@ -134,4 +165,4 @@ const getReviewInfo = async (req, res) => {
 
 
 
-export { getMyReview, getTagReview, postMyReview, getReviewInfo };
+export { getMyReview, postMyReview, deleteMyReview, getTagReview, getReviewInfo };

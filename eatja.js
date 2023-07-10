@@ -9,7 +9,7 @@ import { consoleBar, timeLog } from './lib/common.js';
 import config from './config/config.js';
 import { ping } from './controller/system.js';
 import { getFolloweeInfo, getFollowerInfo, getMyPage } from './controller/userInfo.js';
-import { getMyReview, getReviewInfo, getTagReview, postMyReview } from './controller/reviewInfo.js';
+import { deleteMyReview, getMyReview, getReviewInfo, getTagReview, postMyReview } from './controller/reviewInfo.js';
 import { follow } from './controller/following.js';
 
 const serverPort = config.SERVER_PORT;
@@ -25,6 +25,7 @@ router.route('/ping').get(ping);
 router.route('/my-page').get(getMyPage);
 router.route('/my-review').get(getMyReview);
 router.route('/my-review').post(postMyReview);
+router.route('/my-review').delete(deleteMyReview);
 router.route('/review-info').get(getReviewInfo);
 router.route('/tag-review').get(getTagReview);
 router.route('/follower-info').get(getFollowerInfo);

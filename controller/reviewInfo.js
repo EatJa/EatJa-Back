@@ -69,4 +69,34 @@ const getTagReview = async (req, res) => {
     timeLog('GET tag-review called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
 };
 
-export { getMyReview, getTagReview };
+// ---------- [get]review-info -----------
+// reviewId로 리뷰 찾기
+
+const getReviewInfo = async (req, res) => {
+    const query = 'SELECT * FROM review WHERE reviewId = ?; ';
+    const reviewId = req.query.reviewId;
+    const results = {};
+    results.result = true;
+    results.error = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, reviewId);
+            results.review = rows[0];
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error');
+        } 
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error');   
+    }
+    res.send(results);
+    consoleBar();
+    timeLog('GET review-info called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
+};
+
+
+
+export { getMyReview, getTagReview, getReviewInfo };

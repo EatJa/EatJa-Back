@@ -5,7 +5,7 @@ dotenv.config();
 import { consoleBar, timeLog, resSend } from "../lib/common.js";
 import { pool } from "../lib/connect.js";
 
-// ---------- my-review -----------
+// ---------- [get]my-review -----------
 
 const getMyReview = async (req, res) => {
     const query = 'SELECT * FROM review WHERE userId = ?; ';
@@ -23,7 +23,6 @@ const getMyReview = async (req, res) => {
             for(let i = 0; i <rows.length; i++){
                 results.reviews.push(rows[i]);
             }
-            console.log(rows);
         } catch (err) {
             results.result = false;
             results.error.push('Query Error');
@@ -37,4 +36,35 @@ const getMyReview = async (req, res) => {
     timeLog('GET my-review called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
 };
 
-export { getMyReview };
+// ---------- [get]tag-review -----------
+
+const getTagReview = async (req, res) => {
+    const query = 'SELECT * FROM review WHERE tag = ?; ';
+    const tagId = req.query.tagId;
+    const results = {};
+    results.result = true;
+    results.error = [];
+    results.tagId = tagId;
+    results.reviews = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, tagId);
+            for(let i = 0; i <rows.length; i++){
+                results.reviews.push(rows[i]);
+            }
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error');
+        } 
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error');   
+    }
+    res.send(results);
+    consoleBar();
+    timeLog('GET tag-review called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
+};
+
+export { getMyReview, getTagReview };

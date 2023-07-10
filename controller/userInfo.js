@@ -24,6 +24,7 @@ const getMyPage = async (req, res) => {
             results.result = false;
             results.error.push('Query Error');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error');
@@ -57,6 +58,7 @@ const getFollowerInfo = async (req, res) => {
             results.result = false;
             results.error.push('Query Error');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error');
@@ -89,6 +91,7 @@ const getFolloweeInfo = async (req, res) => {
             results.result = false;
             results.error.push('Query Error');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error');
@@ -118,6 +121,7 @@ const postFollow = async (results, followerId, followeeId) => {
             results.result = false;
             results.error.push('Query Error [postFollow]');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error [postFollow]');
@@ -138,6 +142,7 @@ const appendFollowee = async (results, followerId) => {
             results.result = false;
             results.error.push('Query Error [appendFollowee]');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error [appendFollowee]');
@@ -159,6 +164,7 @@ const appendFollower = async (results, followeeId) => {
             results.result = false;
             results.error.push('Query Error [appendFollower');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error [appendFollower]');
@@ -183,6 +189,7 @@ const deleteFollow = async (results, followerId, followeeId) => {
             results.result = false;
             results.error.push('Query Error [postFollow]');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error [postFollow]');
@@ -203,6 +210,7 @@ const reduceFollowee = async (results, followerId) => {
             results.result = false;
             results.error.push('Query Error [appendFollowee]');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error [appendFollowee]');
@@ -224,6 +232,7 @@ const reduceFollower = async (results, followeeId) => {
             results.result = false;
             results.error.push('Query Error [appendFollower');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error [appendFollower]');

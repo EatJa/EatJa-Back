@@ -28,6 +28,7 @@ const getMyReview = async (req, res) => {
             results.result = false;
             results.error.push('Query Error');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error');
@@ -63,6 +64,7 @@ const postMyReview = async (req, res) => {
             results.result = false;
             results.error.push('Query Error');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error');
@@ -91,6 +93,7 @@ const deleteMyReview = async (req, res) => {
             results.result = false;
             results.error.push('Query Error');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error');
@@ -125,6 +128,7 @@ const getTagReview = async (req, res) => {
             results.result = false;
             results.error.push('Query Error');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error');
@@ -154,6 +158,7 @@ const getReviewInfo = async (req, res) => {
             results.result = false;
             results.error.push('Query Error');
         }
+        connection.release();
     } catch (err) {
         results.result = false;
         results.error.push('DB Error');

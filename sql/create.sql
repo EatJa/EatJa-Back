@@ -68,7 +68,7 @@ INSERT INTO eatja.user(userId, userName, followerCount, followeeCount, tag1, tag
 ("rmsdnjs518", "깨무렁", 1, 1, 1, 2),
 ("rootPark518", "박근원", 1, 1, 4, 5);
 
-INSERT INTO eatja.userRelation(followeeId,followeeId) VALUES
+INSERT INTO eatja.userRelation(followerId,followeeId) VALUES
 ("rmsdnjs518", "rootPark518"),
 ("rootPark518", "rmsdnjs518");
 

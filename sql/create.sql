@@ -1,3 +1,9 @@
+DROP SCHEMA IF EXISTS eatja;
+CREATE SCHEMA IF NOT EXISTS eatja DEFAULT CHARACTER SET utf8;
+USE eatja;
+
+-- --------------------------------
+
 DROP TABLE IF EXISTS user;
 
 CREATE TABLE IF NOT EXISTS user (

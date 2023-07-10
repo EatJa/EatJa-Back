@@ -99,5 +99,71 @@ const getFolloweeInfo = async (req, res) => {
 };
 
 
+// ---------- [post]follow -----------
+// follow 동작시 userRelation 업데이트
 
-export { getMyPage, getFollowerInfo, getFolloweeInfo };
+const postFollow = async (results, followerId, followeeId) => {
+    const query = 'INSERT INTO userRelation(followerId, followeeId) VALUES (?,?);';
+
+    const queryData = [followerId,followeeId];
+
+    results.result = true;
+    results.error = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, queryData);
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error [postFollow]');
+        } 
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error [postFollow]');   
+    }
+};
+
+// ---------- [post]follow -----------
+// follow 동작시 follower 증가
+
+const appendFollowee = async (results, followerId) => {
+    const query = 'UPDATE user set followeeCount = followeeCount + 1 WHERE userId = ?;';
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, followerId);
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error [appendFollowee]');
+        }
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error [appendFollowee]');
+    }
+
+};
+
+// ---------- [post]follow -----------
+// follow 동작시 followee 증가
+
+const appendFollower = async (results, followeeId) => {
+    const query = 'UPDATE user set followerCount = followerCount + 1 WHERE userId = ?;';
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, followeeId);
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error [appendFollower');
+        }
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error [appendFollower]');
+    }
+};
+
+
+export { getMyPage, getFollowerInfo, getFolloweeInfo, postFollow, appendFollowee, appendFollower };

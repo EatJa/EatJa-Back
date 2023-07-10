@@ -21,20 +21,20 @@ const getMyReview = async (req, res) => {
         const connection = await pool.getConnection(async conn => conn);
         try {
             const [rows, fields] = await connection.query(query, userId);
-            for(let i = 0; i <rows.length; i++){
+            for (let i = 0; i < rows.length; i++) {
                 results.reviews.push(rows[i]);
             }
         } catch (err) {
             results.result = false;
             results.error.push('Query Error');
-        } 
+        }
     } catch (err) {
         results.result = false;
-        results.error.push('DB Error');   
+        results.error.push('DB Error');
     }
     res.send(results);
     consoleBar();
-    timeLog('GET my-review called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
+    timeLog('GET my-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
 };
 
 // ---------- [get]tag-review -----------
@@ -53,20 +53,55 @@ const getTagReview = async (req, res) => {
         const connection = await pool.getConnection(async conn => conn);
         try {
             const [rows, fields] = await connection.query(query, tagId);
-            for(let i = 0; i <rows.length; i++){
+            for (let i = 0; i < rows.length; i++) {
                 results.reviews.push(rows[i]);
             }
         } catch (err) {
             results.result = false;
             results.error.push('Query Error');
-        } 
+        }
     } catch (err) {
         results.result = false;
-        results.error.push('DB Error');   
+        results.error.push('DB Error');
     }
     res.send(results);
     consoleBar();
-    timeLog('GET tag-review called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
+    timeLog('GET tag-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
+};
+
+// ---------- [post]my-review -----------
+// 리뷰 작성
+
+const postMyReview = async (req, res) => {
+    const query = 'INSERT INTO review (userId, imgUrl, locationUrl, tag, description) VALUES (?,?,?,?,?);';
+
+    const userId = req.body.userId;
+    const imgUrl = req.body.imgUrl;
+    const locationUrl = req.body.locationUrl;
+    const tag = req.body.tag;
+    const description = req.body.description;
+
+    const queryData = [userId, imgUrl, locationUrl, tag, description];
+
+    const results = {};
+    results.result = true;
+    results.error = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, queryData);
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error');
+        }
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error');
+    }
+    res.send(results);
+    consoleBar();
+    timeLog('POST my-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
 };
 
 // ---------- [get]review-info -----------
@@ -87,16 +122,16 @@ const getReviewInfo = async (req, res) => {
         } catch (err) {
             results.result = false;
             results.error.push('Query Error');
-        } 
+        }
     } catch (err) {
         results.result = false;
-        results.error.push('DB Error');   
+        results.error.push('DB Error');
     }
     res.send(results);
     consoleBar();
-    timeLog('GET review-info called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
+    timeLog('GET review-info called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
 };
 
 
 
-export { getMyReview, getTagReview, getReviewInfo };
+export { getMyReview, getTagReview, postMyReview, getReviewInfo };

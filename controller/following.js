@@ -20,4 +20,13 @@ const follow = async (req, res) => {
     timeLog('POST follow called // '+ JSON.stringify(req.query)+ ' // '+ JSON.stringify(results));
 };
 
+const unFollow = async (req, res) => {
+    const results = {};
+
+    const followerId = req.query.followerId;
+    const followeeId = req.query.followeeId;
+
+    
+}
+
 export { follow };

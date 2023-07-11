@@ -38,41 +38,6 @@ const getMyReview = async (req, res) => {
     timeLog('GET my-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
 };
 
-// ---------- [post]my-review -----------
-// 리뷰 작성
-
-const postMyReview = async (req, res) => {
-    const query = 'INSERT INTO review (userId, imgUrl, locationUrl, tag, description) VALUES (?,?,?,?,?);';
-
-    const userId = req.body.userId;
-    const imgUrl = req.body.imgUrl;
-    const locationUrl = req.body.locationUrl;
-    const tag = req.body.tag;
-    const description = req.body.description;
-
-    const queryData = [userId, imgUrl, locationUrl, tag, description];
-
-    const results = {};
-    results.result = true;
-    results.error = [];
-
-    try {
-        const connection = await pool.getConnection(async conn => conn);
-        try {
-            const [rows, fields] = await connection.query(query, queryData);
-        } catch (err) {
-            results.result = false;
-            results.error.push('Query Error');
-        }
-        connection.release();
-    } catch (err) {
-        results.result = false;
-        results.error.push('DB Error');
-    }
-    res.send(results);
-    consoleBar();
-    timeLog('POST my-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
-};
 
 // ---------- [delete]my-review -----------
 // 리뷰 삭제
@@ -170,4 +135,4 @@ const getReviewInfo = async (req, res) => {
 
 
 
-export { getMyReview, postMyReview, deleteMyReview, getTagReview, getReviewInfo };
+export { getMyReview, deleteMyReview, getTagReview, getReviewInfo };

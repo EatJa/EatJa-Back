@@ -21,12 +21,12 @@ const follow = async (req, res) => {
 
         res.send(results);
         consoleBar();
-        timeLog('POST follow called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
+        timeLog('POST follow called // ' + JSON.stringify(req.body) + ' // ' + JSON.stringify(results));
     }
     else {
         res.send(results);
         consoleBar();
-        timeLog('POST follow called [ALEADY FOLLOWED]// ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
+        timeLog('POST follow called [ALEADY FOLLOWED]// ' + JSON.stringify(req.body) + ' // ' + JSON.stringify(results));
     }
 };
 

@@ -21,7 +21,7 @@ const signIn = async (req, res) => {
     // 회원가입이 되어있지 않은 경우에 업데이트
     if (results.isSignUp == false) {
         postSignUp(results, userId, userName, profileImg);
-        timeLog('SIGN-UP // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
+        timeLog('SIGN-UP // ' + JSON.stringify(req.body) + ' // ' + JSON.stringify(results));
     }
 
     // 로그인
@@ -29,7 +29,7 @@ const signIn = async (req, res) => {
 
     res.send(results);
     consoleBar();
-    timeLog('POST sign-in called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
+    timeLog('POST sign-in called // ' + JSON.stringify(req.body) + ' // ' + JSON.stringify(results));
 
 };
 

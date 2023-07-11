@@ -8,7 +8,7 @@ import cors from 'cors';
 import { consoleBar, timeLog } from './lib/common.js';
 import config from './config/config.js';
 import { ping } from './controller/system.js';
-import { getFolloweeInfo, getFollowerInfo, getMyPage } from './controller/userInfo.js';
+import { getFolloweeInfo, getFollowerInfo, getMyPage, getSearchUser } from './controller/userInfo.js';
 import { deleteMyReview, getMyReview, getReviewInfo, getTagReview, postMyReview } from './controller/reviewInfo.js';
 import { follow, unFollow } from './controller/following.js';
 import { signIn } from './controller/singUp.js';
@@ -34,6 +34,7 @@ router.route('/follower-info').get(getFollowerInfo);
 router.route('/followee-info').get(getFolloweeInfo);
 router.route('/follow').post(follow);
 router.route('/follow').delete(unFollow);
+router.route('/search-user').get(getSearchUser);
 
 
 // -------------------- server start --------------------

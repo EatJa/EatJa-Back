@@ -339,7 +339,7 @@ const reduceFollower = async (results, followeeId) => {
             const [rows, fields] = await connection.query(query, followeeId);
         } catch (err) {
             results.result = false;
-            results.error.push('Query Error [reduceFollower');
+            results.error.push('Query Error [reduceFollower]');
         }
         connection.release();
     } catch (err) {
@@ -348,9 +348,37 @@ const reduceFollower = async (results, followeeId) => {
     }
 };
 
+const getSearchUser = async (req, res) => {
+    const query = 'SELECT * FROM user WHERE userName = ?;';
+    const userName = req.query.userName;
+
+    const results = {};
+    results.result = true;
+    results.error = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, userName);
+            results.user = rows[0];
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error ');
+        }
+        connection.release();
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error ');
+    }
+    res.send(results);
+    consoleBar();
+    timeLog('GET search-user called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
+};
+
 export {
     checkSignUp, postSignUp, login,
     getMyPage, getFollowerInfo, getFolloweeInfo,
     checkFollow, postFollow, appendFollowee, appendFollower,
-    deleteFollow, reduceFollowee, reduceFollower
+    deleteFollow, reduceFollowee, reduceFollower,
+    getSearchUser
 };

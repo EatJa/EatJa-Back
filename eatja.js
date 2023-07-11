@@ -11,7 +11,7 @@ import { consoleBar, timeLog } from './lib/common.js';
 import config from './config/config.js';
 import { ping } from './controller/system.js';
 import { getFolloweeInfo, getFollowerInfo, getMyPage, getSearchUser } from './controller/userInfo.js';
-import { deleteMyReview, getMyReview, getReviewInfo, getTagReview } from './controller/reviewInfo.js';
+import { deleteMyReview, getMyReview, getReviewInfo, getTagReview, geAllReview } from './controller/reviewInfo.js';
 import { follow, unFollow } from './controller/following.js';
 import { signIn } from './controller/singUp.js';
 import { uploadReview } from './controller/uploadReview.js';
@@ -53,6 +53,7 @@ router.route('/followee-info').get(getFolloweeInfo);
 router.route('/follow').post(follow);
 router.route('/follow').delete(unFollow);
 router.route('/search-user').get(getSearchUser);
+router.route('/all-review').get(geAllReview);
 
 
 // -------------------- server start --------------------

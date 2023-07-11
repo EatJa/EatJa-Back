@@ -19,7 +19,7 @@ import { pool } from "../lib/connect.js";
     const description = req.body.description;
   
     const queryData = [userId, imgUrl, locationUrl, tag, description];
-  
+    
     const results = {};
     results.result = true;
     results.error = [];

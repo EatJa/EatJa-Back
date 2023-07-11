@@ -133,6 +133,37 @@ const getReviewInfo = async (req, res) => {
     timeLog('GET review-info called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
 };
 
+// ---------- [get]all-review -----------
+// 전체 리뷰 리턴
 
+const geAllReview = async (req, res) => {
+    const query = 'SELECT * FROM review; ';
+    const tagId = req.query.tagId;
+    const results = {};
+    results.result = true;
+    results.error = [];
+    results.tagId = tagId;
+    results.reviews = [];
 
-export { getMyReview, deleteMyReview, getTagReview, getReviewInfo };
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, tagId);
+            for (let i = 0; i < rows.length; i++) {
+                results.reviews.push(rows[i]);
+            }
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error');
+        }
+        connection.release();
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error');
+    }
+    res.send(results);
+    consoleBar();
+    timeLog('GET all-review called // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
+};
+
+export { getMyReview, deleteMyReview, getTagReview, getReviewInfo, geAllReview };

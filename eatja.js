@@ -11,6 +11,7 @@ import { ping } from './controller/system.js';
 import { getFolloweeInfo, getFollowerInfo, getMyPage } from './controller/userInfo.js';
 import { deleteMyReview, getMyReview, getReviewInfo, getTagReview, postMyReview } from './controller/reviewInfo.js';
 import { follow, unFollow } from './controller/following.js';
+import { signIn } from './controller/singUp.js';
 
 const serverPort = config.SERVER_PORT;
 const app = express();
@@ -22,6 +23,7 @@ const router = express.Router();
 // -------------------- api --------------------
 
 router.route('/ping').get(ping);
+router.route('/sign-in').post(signIn);
 router.route('/my-page').get(getMyPage);
 router.route('/my-review').get(getMyReview);
 router.route('/my-review').post(postMyReview);

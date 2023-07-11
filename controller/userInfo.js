@@ -5,6 +5,85 @@ dotenv.config();
 import { consoleBar, timeLog, resSend } from "../lib/common.js";
 import { pool } from "../lib/connect.js";
 
+
+// ---------- [post]sign-in -----------
+// 회원가입 체크
+
+const checkSignUp = async (results, userId) => {
+    const query = 'SELECT * FROM user WHERE userId = ?;';
+
+    results.result = true;
+    results.isSignUp = false;
+    results.error = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, userId);
+            if(rows.length != 0) {
+                results.isSignUp = true;
+            }
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error [checkSignUp]');
+        }
+        connection.release();
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error [checkSignUp]');
+    }
+};
+
+// ---------- [post]sign-in -----------
+// 회원가입 진행
+
+const postSignUp = async (results, userId, userName, profileImg) => {
+    const query = 'INSERT INTO user(userId, userName, profileImg) VALUES (?, ?, ?);';
+    
+    const queryData = [userId, userName, profileImg];
+
+    results.result = true;
+    results.error = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, queryData);
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error [postSignUp]');
+        }
+        connection.release();
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error [postSignUp]');
+    }
+};
+
+// ---------- [post]sign-in -----------
+// 회원가입 or 로그인 후 리턴
+
+const login = async (results, userId) => {
+    const query = 'SELECT * FROM user WHERE userId = ?; ';
+    results.result = true;
+    results.error = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, userId);
+            results.user = rows[0];
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error');
+        }
+        connection.release();
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error');
+    }
+};
+
 // ---------- [get]my-page -----------
 // userId로 유저 정보 가져오기
 
@@ -270,6 +349,7 @@ const reduceFollower = async (results, followeeId) => {
 };
 
 export {
+    checkSignUp, postSignUp, login,
     getMyPage, getFollowerInfo, getFolloweeInfo,
     checkFollow, postFollow, appendFollowee, appendFollower,
     deleteFollow, reduceFollowee, reduceFollower

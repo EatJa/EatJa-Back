@@ -103,6 +103,36 @@ const getFolloweeInfo = async (req, res) => {
 
 
 // ---------- [post]follow -----------
+// follow 동작시 동일 relation 있는지 체크
+
+const checkFollow = async (results, followerId, followeeId) => {
+    const query = 'SELECT * FROM userRelation WHERE followerId = ? AND followeeId = ?;';
+
+    const queryData = [followerId, followeeId];
+
+    results.result = true;
+    results.exist = false;
+    results.error = [];
+
+    try {
+        const connection = await pool.getConnection(async conn => conn);
+        try {
+            const [rows, fields] = await connection.query(query, queryData);
+            if (rows.length != 0) {
+                results.exist = true;
+            }
+        } catch (err) {
+            results.result = false;
+            results.error.push('Query Error [checkFollow]');
+        }
+        connection.release();
+    } catch (err) {
+        results.result = false;
+        results.error.push('DB Error [checkFollow]');
+    }
+};
+
+// ---------- [post]follow -----------
 // follow 동작시 userRelation 업데이트
 
 const postFollow = async (results, followerId, followeeId) => {
@@ -208,12 +238,12 @@ const reduceFollowee = async (results, followerId) => {
             const [rows, fields] = await connection.query(query, followerId);
         } catch (err) {
             results.result = false;
-            results.error.push('Query Error [appendFollowee]');
+            results.error.push('Query Error [reduceFollowee]');
         }
         connection.release();
     } catch (err) {
         results.result = false;
-        results.error.push('DB Error [appendFollowee]');
+        results.error.push('DB Error [reduceFollowee]');
     }
 
 };
@@ -230,17 +260,17 @@ const reduceFollower = async (results, followeeId) => {
             const [rows, fields] = await connection.query(query, followeeId);
         } catch (err) {
             results.result = false;
-            results.error.push('Query Error [appendFollower');
+            results.error.push('Query Error [reduceFollower');
         }
         connection.release();
     } catch (err) {
         results.result = false;
-        results.error.push('DB Error [appendFollower]');
+        results.error.push('DB Error [reduceFollower]');
     }
 };
 
 export {
     getMyPage, getFollowerInfo, getFolloweeInfo,
-    postFollow, appendFollowee, appendFollower,
+    checkFollow, postFollow, appendFollowee, appendFollower,
     deleteFollow, reduceFollowee, reduceFollower
 };

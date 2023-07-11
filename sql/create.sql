@@ -34,6 +34,7 @@ DROP TABLE IF EXISTS review;
 CREATE TABLE IF NOT EXISTS review (
   reviewId INT NOT NULL AUTO_INCREMENT,
   userId VARCHAR(60),
+  reviewName VARCHAR(30),
   imgUrl VARCHAR(200),
   locationUrl VARCHAR(200),
   tag TINYINT(1),
@@ -76,7 +77,7 @@ INSERT INTO userRelation(followerId,followeeId) VALUES
 ("rootPark518", "rmsdnjs518"),
 ("sudo", "rootPark518");
 
-INSERT INTO review(userId, imgUrl, locationUrl, tag, description) VALUES
-("rmsdnjs518","https://pcmap.place.naver.com/restaurant/33068253/home?bookmarkId=551864873&from=map&fromPanelNum=1&ts=1688952209918#", "https://naver.me/5tj4jtol", 1, "여기 닭도리탕 마늘맛 좔좔" ),
-("rootPark", "https://pcmap.place.naver.com/restaurant/793407871/home?bookmarkId=843473909&from=map&fromPanelNum=1&ts=1688952294901#", "https://naver.me/IMQppLwu", 1, "맛있긴 한디 공기밥 2천원 실화?"),
-("rmsdnjs518", "https://pcmap.place.naver.com/restaurant/20601121/home?bookmarkId=655360159&from=map&fromPanelNum=1&ts=1688957113485#", "https://naver.me/xTeSlxcE", 1, "맛있는 동치미맛 막국수");
+INSERT INTO review(userId, reviewName, imgUrl, locationUrl, tag, description) VALUES
+("Fgg2WajUD8XArOru7HEfdlDjYoS7KkoBlGb4wkNmUlg", "계림","https://pcmap.place.naver.com/restaurant/33068253/home?bookmarkId=551864873&from=map&fromPanelNum=1&ts=1688952209918#", "https://naver.me/5tj4jtol", 1, "여기 닭도리탕 마늘맛 좔좔" ),
+("Fgg2WajUD8XArOru7HEfdlDjYoS7KkoBlGb4wkNmUlg", "게방식당","https://pcmap.place.naver.com/restaurant/793407871/home?bookmarkId=843473909&from=map&fromPanelNum=1&ts=1688952294901#", "https://naver.me/IMQppLwu", 1, "맛있긴 한디 공기밥 2천원 실화?"),
+("Fgg2WajUD8XArOru7HEfdlDjYoS7KkoBlGb4wkNmUlg", "성천막국수","https://pcmap.place.naver.com/restaurant/20601121/home?bookmarkId=655360159&from=map&fromPanelNum=1&ts=1688957113485#", "https://naver.me/xTeSlxcE", 1, "맛있는 동치미맛 막국수");

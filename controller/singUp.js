@@ -18,12 +18,14 @@ const signIn = async (req, res) => {
 
     await checkSignUp(results, userId);
 
+    // 회원가입이 되어있지 않은 경우에 업데이트
     if (results.isSignUp == false) {
         postSignUp(results, userId, userName, profileImg);
         timeLog('SIGN-UP // ' + JSON.stringify(req.query) + ' // ' + JSON.stringify(results));
     }
 
-    login(results, userId);
+    // 로그인
+    await login(results, userId);
 
     res.send(results);
     consoleBar();

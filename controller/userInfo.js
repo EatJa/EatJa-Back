@@ -348,9 +348,13 @@ const reduceFollower = async (results, followeeId) => {
     }
 };
 
+
+// ---------- [get]search-user -----------
+// 유저 이름으로 있는지 여부 확인. 일부 문자열로 가능
+
 const getSearchUser = async (req, res) => {
-    const query = 'SELECT * FROM user WHERE userName = ?;';
-    const userName = req.query.userName;
+    const query = 'SELECT * FROM user WHERE userName LIKE ?;';
+    const userName = '%'+ req.query.userName +'%' ;
 
     const results = {};
     results.result = true;

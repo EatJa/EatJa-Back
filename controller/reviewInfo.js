@@ -75,7 +75,7 @@ const deleteMyReview = async (req, res) => {
 
 const getTagReview = async (req, res) => {
     const query = 'SELECT * FROM review WHERE tag = ?; ';
-    const tagId = req.query.tagId;
+    const tagId = Number(req.query.tagId);
     const results = {};
     results.result = true;
     results.error = [];

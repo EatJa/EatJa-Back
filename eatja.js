@@ -59,6 +59,7 @@ router.route('/all-review').get(geAllReview);
 // -------------------- server start --------------------
 
 app.use('/eatja/api/v1', router);
+app.use('/reviewImages', express.static('reviewImages'));
 app.listen(serverPort);
 consoleBar();
 timeLog('Test Server Started');

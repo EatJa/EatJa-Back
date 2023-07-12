@@ -157,14 +157,14 @@ const getFolloweeInfo = async (req, res) => {
     results.result = true;
     results.error = [];
     results.userId = userId;
-    results.followers = [];
+    results.followees = [];
 
     try {
         const connection = await pool.getConnection(async conn => conn);
         try {
             const [rows, fields] = await connection.query(query, userId);
             for (let i = 0; i < rows.length; i++) {
-                results.followers.push(rows[i]);
+                results.followees.push(rows[i]);
             }
         } catch (err) {
             results.result = false;
